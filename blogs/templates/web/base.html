@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>首页_王运超个人博客</title>
+<meta name="keywords" content="个人博客,杨青个人博客,个人博客模板,杨青" />
+<meta name="description" content="杨青个人博客，是一个站在web前端设计之路的女程序员个人网站，提供个人博客模板免费资源下载的个人原创网站。" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+<link href="{% static 'web/css/base.css' %}" rel="stylesheet">
+<link href="{% static 'web/css/index.css' %}" rel="stylesheet">
+<link href="{% static 'web/css/m.css' %}" rel="stylesheet">
+<script src="{% static 'web/js/jquery.min.js' %}" type="text/javascript"></script>
+<script type="text/javascript" src="{% static 'web/js/hc-sticky.js' %}"></script>
+<script type="text/javascript" src="{% static 'web/js/comm.js' %}"></script>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<header class="header-navigation" id="header">
+  <nav><div class="logo"><a href="/">王运超个人博客</a></div>
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="starlist">
+      <li><a href="{% url 'front:index' %}">网站首页</a></li>
+      <li><a href="{% url 'front:about' %}">关于我</a></li>
+    </ul>
+  </nav>
+</header>
+<article>
+  <aside class="l_box">
+  <script>
+      function up() {
+          var keyboard = $("#keyboard").val()
+          location.href = '/front/index?keyboard=' + keyboard
+      }
+  </script>
+    <div class="search">
+        <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+        <input name="show" value="title" type="hidden">
+        <input name="tempid" value="1" type="hidden">
+        <input name="tbname" value="news" type="hidden">
+        <input name="Submit" class="input_submit" value="搜索" onclick="up()" type="button">
+    </div>
+    <div class="fenlei">
+      <h2>文章分类</h2>
+        <form action="">
+            <ul>
+      {% for aty in atys %}
+        <li><a href="{% url 'front:index2' %}?type={{ aty.id }}">{{ aty.name }}({{ aty.count }})</a></li>
+      {% endfor %}
+      </ul>
+        </form>
+    </div>
+    <div class="tuijian">
+      <h2>站长推荐</h2>
+      <ul>
+          {% for art in arts1 %}
+            {% if art.a_recommend %}
+              <li><a href="/front/article/{{ art.id }}">{{ art.a_name }}</a></li>
+            {% endif %}
+          {% endfor %}
+      </ul>
+    </div>
+     <div class="tuijian">
+      <h2>点击排行</h2>
+      <ul>
+          {% for art in artsd %}
+           {% if forloop.counter < 11 %}
+              <li><a title="第{{ forloop.counter }}名" href="/front/article/{{ art.id }}">{{ art.a_name }}&nbsp;&nbsp;&nbsp;热度：{{ art.a_hit }}</a></li>
+            {% endif %}
+          {% endfor %}
+      </ul>
+    </div>
+    <div class="guanzhu">
+      <h2>关注我</h2>
+      <ul>
+        <img src="{% static 'web/images/wx.jpg' %}">
+      </ul>
+    </div>
+  </aside>
+
+    {% block content %}
+    {% endblock %}
+
+</article>
+<footer>
+  <p>Design by <a href="http://www.yangqq.com" target="_blank">王运超个人博客</a> <a href="/">黔ICP备11002373号-1</a></p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+    <main>
+    <div class="infosbox">
+      <div class="newsview">
+        <h3 class="news_title">{{ a.a_name }}</h3>
+        <div class="bloginfo">
+          <ul>
+         <li class="timer">创建时间：{{ a.create_time | date:'Y-m-d' }}</li>
+         <li class="view">{{ a.a_hit }}人已阅读</li>
+         {% if a.image_url %}
+         <li class="view"><img src="/media/{{ a.image_url }}"></li>
+         {% endif %}
+          </ul>
+        </div>
+        <br/>
+        <div class="news_con">
+            {% autoescape off %}
+            {{ a.a_content }}
+            {% endautoescape %}
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

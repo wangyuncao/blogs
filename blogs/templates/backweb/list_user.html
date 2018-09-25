@@ -1,0 +1,44 @@
+{% extends 'backweb/base.html' %}
+
+{% block content %}
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">用户列表</h2>
+      </div>
+      <table class="table">
+       <tr>
+        <th>编号</th>
+        <th>用户名</th>
+        <th>角色</th>
+        <th>操作</th>
+       </tr>
+       {% for user in users %}
+       <tr>
+        <td class="center">{{ user.id }}</td>
+        <td class="center">{{ user.username }}</td>
+        <td class="center">{{ user.u_r.r_name }}</td>
+        <td class="center">
+         <a href="/web/about/{{ user.id }}" title="预览" class="link_icon" target="_blank">&#118;</a>
+         <a href="/backweb/updateman/{{ user.id }}" title="编辑" class="link_icon">&#101;</a>
+         <a href="/backweb/delman/{{ user.id }}" title="删除" class="link_icon">&#100;</a>
+        </td>
+       </tr>
+       {% endfor %}
+      </table>
+        <aside class="paging">
+        {% if arts.has_previous %}
+                <a href="{% url 'backweb:management' %}?page={{ arts.previous_page_number }}">上一页</a>
+        {% endif %}
+                <a href="{% url 'backweb:management' %}">第一页</a>
+            {% for i in arts.paginator.page_range %}
+                <a href="{% url 'backweb:management' %}?page={{ i }}">{{ i }}</a>
+            {% endfor %}
+                <a href="{% url 'backweb:management' %}?page={{ arts.paginator.num_pages }}">最后一页</a>
+      {% if arts.has_next %}
+                <a href="{% url 'backweb:management' %}?page={{ arts.next_page_number }}">下一页</a>
+        {% endif %}
+        </aside>
+ </div>
+</section>
+{% endblock %}

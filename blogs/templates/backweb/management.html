@@ -1,0 +1,93 @@
+{% extends 'backweb/base.html' %}
+
+{% block content %}
+<section class="rt_wrap content mCustomScrollbar">
+{% if 'LISTARTICLE' in user.user_permission %}
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">文章列表</h2>
+      {% if 'ADDARTICLE' in user.user_permission %}
+       <a href="{% url 'backweb:daaman' %}" class="fr top_rt_btn add_icon">添加文章</a>
+      {% endif %}
+      </div>
+        <script>
+            function up() {
+                var judge = $("#judge").val()
+                var price = $("#price").val()
+                location.href = '/backweb/management?judge=' + judge + '&price=' + price
+            }
+        </script>
+      <section class="mtb">
+       <select class="select" name="judge" id="judge">
+        <option value="a_name">关键词</option>
+        <option value="id">文章ID</option>
+       </select>
+       <input type="text" id="price" class="textbox textbox_225" placeholder="输入文章关键词或文章ID..." name="price"/>
+       <input type="submit" value="查询" class="group_btn" onclick="up()"/>
+      </section>
+      <table class="table">
+       <tr>
+        <th>编号</th>
+        <th>首图</th>
+        <th>文章名称</th>
+        <th>描述</th>
+        <th>文章种类</th>
+        <th>隐藏</th>
+        <th>推荐</th>
+        <th>字数</th>
+        <th>点击量</th>
+        <th>创建时间</th>
+        <th>操作</th>
+       </tr>
+       {% for art in arts %}
+       <tr>
+        <td class="center">{{ art.id }}</td>
+        <td class="center"><img src="/media/{{ art.image_url }}" width="50" height="50"></td>
+        <td class="center">{{ art.a_name }}</td>
+        <td class="center">{{ art.a_desc }}</td>
+        <td class="center">{{ art.a_category.name }}</td>
+       <td class="center">
+        {% if art.a_conceal %}
+           <a href="/backweb/conceal/{{ art.id }}" title="是" class="link_icon">&#89;</a>
+        {% else %}
+           <a href="/backweb/conceal/{{ art.id }}" title="否" class="link_icon">&#88;</a>
+        {% endif %}
+       </td>
+       <td class="center">
+        {% if art.a_recommend %}
+           <a href="/backweb/recommend/{{ art.id }}" title="是" class="link_icon">&#89;</a>
+        {% else %}
+           <a href="/backweb/recommend/{{ art.id }}" title="否" class="link_icon">&#88;</a>
+        {% endif %}
+       </td>
+        <td class="center">{{ art.a_content | length }}</td>
+        <td class="center">{{ art.a_hit }}</td>
+        <td class="center">{{ art.create_time|date:'Y-m-d h:m:s' }}</td>
+        <td class="center">
+        {% if 'EDILARTICLE' in user.user_permission %}
+         <a href="/backweb/updateman/{{ art.id }}" title="编辑" class="link_icon">&#101;</a>
+        {% endif %}
+        {% if 'DELARTICLE' in user.user_permission %}
+         <a href="/backweb/delman/{{ art.id }}" title="删除" class="link_icon">&#100;</a>
+        {% endif %}
+        </td>
+       </tr>
+       {% endfor %}
+      </table>
+        <aside class="paging">
+        {% if arts.has_previous %}
+                <a href="{% url 'backweb:management' %}?page={{ arts.previous_page_number }}&judge={{ judge }}&price={{ price }}">上一页</a>
+        {% endif %}
+                <a href="{% url 'backweb:management' %}?&judge={{ judge }}&price={{ price }}">首页</a>
+            {% for i in arts.paginator.page_range %}
+                <a href="{% url 'backweb:management' %}?page={{ i }}&judge={{ judge }}&price={{ price }}">{{ i }}</a>
+            {% endfor %}
+                <a href="{% url 'backweb:management' %}?page={{ arts.paginator.num_pages }}&judge={{ judge }}&price={{ price }}">尾页</a>
+        {% if arts.has_next %}
+                <a href="{% url 'backweb:management' %}?page={{ arts.next_page_number }}&judge={{ judge }}&price={{ price }}">下一页</a>
+        {% endif %}
+        </aside>
+ </div>
+{% endif %}
+</section>
+{% endblock %}

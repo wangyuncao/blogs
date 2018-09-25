@@ -1,0 +1,31 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+  <main class="r_box">
+      <h1>{{ atyd.name }}类</h1>
+    {% for art in arts2 %}
+        <li>
+            <h3><a href="/front/article/{{ art.id }}">{{ art.a_name }}</a></h3>
+            <h5>热度：{{ art.a_hit }}</h5>
+            <p>{{ art.a_desc }}</p>
+        </li>
+    {% endfor %}
+        <div class="pagelist">
+            <a href="{% url 'front:index2' %}?type={{ atyd.id }}" class="curPage">首页</a>
+
+            {% if arts2.has_previous %}
+            <a href="{% url 'front:index2' %}?type={{ atyd.id }}&page={{ arts2.previous_page_number }}" class="allpage"><b>上一页</b></a>&nbsp;&nbsp;
+            {% endif %}
+
+            {% for i in arts2.paginator.page_range %}
+              <a href="{% url 'front:index2' %}?type={{ atyd.id }}&page={{ i }}">{{ i }}</a>
+            {% endfor %}
+
+            {% if arts2.has_next %}
+                <a href="{% url 'front:index2' %}?type={{ atyd.id }}&page={{ arts2.next_page_number }}" class="allpage"><b>下一页</b></a>
+            {% endif %}
+
+            <a href="{% url 'front:index2' %}?type={{ atyd.id }}&page={{ arts2.paginator.num_pages }}" class="curPage">尾页</a>
+        </div>
+  </main>
+{% endblock %}

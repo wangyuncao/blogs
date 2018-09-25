@@ -1,0 +1,36 @@
+{% extends 'backweb/base.html' %}
+
+{% block content %}
+
+<section class="rt_wrap content mCustomScrollbar">
+ <div class="rt_content">
+      <div class="page_title">
+       <h2 class="fl">添加用户</h2>
+      </div>
+     <form action="" method="post" enctype="multipart/form-data">
+         {%  csrf_token %}
+     <section>
+      <ul class="ulColumn2">
+          {{ error }}
+       <li>
+        <span class="item_name" style="width:120px;">用户名：</span>
+        <input name="username" value="" type="text" class="textbox textbox_295" placeholder="用户名..."/>
+{#        <span class="errorTips">错误提示信息...</span>#}
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">密码：</span>
+        <input name="password1" value="" type="password" class="textbox textbox_295" placeholder="密码..."/>
+{#        <span class="errorTips">错误提示信息...</span>#}
+       </li>
+          <li>
+        <span class="item_name" style="width:120px;">确认密码：</span>
+        <input name="password2" value="" type="password" class="textbox textbox_295" placeholder="确认密码..."/>
+{#        <span class="errorTips">错误提示信息...</span>#}
+       </li>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="submit" class="link_btn"/>
+     </section>
+     </form>
+ </div>
+</section>
+{% endblock %}

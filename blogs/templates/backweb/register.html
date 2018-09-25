@@ -1,0 +1,36 @@
+{% extends 'backweb/base2.html' %}
+
+{% block title %}
+    注册界面
+{% endblock %}
+{% block content %}
+<dl class="admin_login">
+ <dt>
+  <strong>站点后台管理系统</strong>
+  <em>Management System</em>
+ </dt>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ error }}
+         <dd class="user_icon">
+          <input type="text" placeholder="账号" name="username" class="login_txtbx"/>
+         </dd>
+         <dd class="pwd_icon">
+          <input type="password" placeholder="密码" name="password1" class="login_txtbx"/>
+         </dd>
+        <dd class="pwd_icon">
+          <input type="password" placeholder="确认密码" name="password2" class="login_txtbx"/>
+         </dd>
+         <dd>
+          <input type="submit" value="立即注册" class="submit_btn"/>
+         </dd>
+        <dd>
+            <a href="{% url 'backweb:my_login' %}">已有帐号？返回登录</a>
+        </dd>
+    </form>
+ <dd>
+  <p>© 2017-2018 wang 版权所有</p>
+  <p>贵K2-20100821-1</p>
+ </dd>
+</dl>
+{% endblock %}
